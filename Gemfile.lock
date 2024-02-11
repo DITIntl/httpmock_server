@@ -154,6 +154,8 @@ GEM
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
+    pg (1.5.4)
+    pg (1.5.4-x64-mingw-ucrt)
     primer_view_components (0.18.1)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -289,6 +291,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  pg (~> 1.5)
   primer_view_components
   puma (>= 5.0)
   rails (~> 7.1.3)

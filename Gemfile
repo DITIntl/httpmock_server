@@ -74,3 +74,5 @@ gem 'primer_view_components'
 
 gem 'rubocop-capybara', '~> 2.20'
 gem 'rubocop-rails', '~> 2.23'
+
+gem 'pg', '~> 1.5'
