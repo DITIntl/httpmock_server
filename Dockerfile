@@ -62,7 +62,7 @@ COPY --from=build /rails /rails
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails log storage tmp  && \
-    RUN chmod -R 777 tmp storage log
+    chmod -R 777 tmp storage log
 USER rails:rails
 
 # Entrypoint prepares the database.
