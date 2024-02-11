@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-bundle exec rubocop --force-exclusion --color "$@"
+bundle exec rubocop -a --force-exclusion --color "$@"
