@@ -76,3 +76,7 @@ gem 'rubocop-capybara', '~> 2.20'
 gem 'rubocop-rails', '~> 2.23'
 
 gem 'pg', '~> 1.5'
+
+gem 'google-cloud-logging', '~> 2.3', group: :production
+
+gem 'stackdriver', '~> 0.21.1', group: :production
