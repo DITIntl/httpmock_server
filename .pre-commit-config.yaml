@@ -18,8 +18,3 @@ repos:
       # Language syntax/formatting
       - id: check-yaml
         stages: [commit]
-
-  - repo: https://github.com/mattlqx/pre-commit-ruby
-    rev: v1.3.5
-    hooks:
-      - id: rubocop
