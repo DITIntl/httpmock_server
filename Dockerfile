@@ -4,17 +4,11 @@
 ARG RUBY_VERSION=3.2.3
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
-ARG RAILS_MASTER_KEY=""
-ARG GIT_COMMIT=""
-ARG TEST_1="test 3"
+ARG RAILS_MASTER_KEY
+ARG GIT_COMMIT
 
 # Rails app lives here
 WORKDIR /rails
-
-RUN echo $GIT_COMMIT
-RUN echo $RAILS_MASTER_KEY |cut -c1-5
-RUN echo "How are you"
-RUN echo $TEST_1
 
 # Set production environment
 ENV RAILS_ENV="production" \
@@ -48,7 +42,7 @@ RUN chmod +x bin/* && \
     sed -i "s/\r$//g" bin/* && \
     sed -i 's/ruby\.exe$/ruby/' bin/*
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+# Precompiling assets for production
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
