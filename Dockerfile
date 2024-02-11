@@ -8,6 +8,9 @@ FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 # Rails app lives here
 WORKDIR /rails
 
+RUN echo $GIT_COMMIT
+RUN echo $RAILS_MASTER_KEY |cut -c1-5
+
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
