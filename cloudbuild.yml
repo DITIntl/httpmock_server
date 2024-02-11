@@ -7,6 +7,7 @@ steps:
       - "--dockerfile=Dockerfile"
       - "--context=."
       - "--build-arg=GIT_COMMIT=$COMMIT_SHA"
+      - "--build-arg=TEST_1=2"
       - "--build-arg=RAILS_MASTER_KEY=$_RAILS_MASTER_KEY"
       - "--snapshotMode=time"
 

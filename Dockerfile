@@ -3,6 +3,8 @@
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.2.3
 ARG RAILS_MASTER_KEY
+ARG GIT_COMMIT
+ARG TEST_1
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
 # Rails app lives here
@@ -10,6 +12,8 @@ WORKDIR /rails
 
 RUN echo $GIT_COMMIT
 RUN echo $RAILS_MASTER_KEY |cut -c1-5
+RUN echo "How are you"
+RUN echo $TEST_1
 
 # Set production environment
 ENV RAILS_ENV="production" \
