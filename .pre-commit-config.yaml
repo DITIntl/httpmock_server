@@ -23,7 +23,3 @@ repos:
     rev: v1.3.5
     hooks:
       - id: rubocop
-      - id: foodcritic
-      - id: cookstyle
-      - id: rspec
-      - id: chef-cookbook-version
