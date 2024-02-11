@@ -24,4 +24,4 @@ options:
 
 substitutions:
   _SERVICE_NAME: httpmock
-  _REGION: us-east1
+  _REGION: us-central1
