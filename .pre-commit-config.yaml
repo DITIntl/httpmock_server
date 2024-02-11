@@ -26,3 +26,5 @@ repos:
         language: script
         types: ['ruby']
         stages: [ commit ]
+
+exclude: '.yml.enc$'
