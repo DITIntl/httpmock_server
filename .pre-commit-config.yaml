@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      # Git state
+      - id: check-merge-conflict
+        stages: [commit]
+      # Sensitive information
+      - id: detect-private-key
+        stages: [commit]
+      # Generic file state
+      - id: trailing-whitespace
+        stages: [commit]
+      - id: mixed-line-ending
+        stages: [commit]
+      - id: end-of-file-fixer
+        stages: [commit]
+      # Language syntax/formatting
+      - id: check-yaml
+        stages: [commit]
+
+  - repo: https://github.com/mattlqx/pre-commit-ruby
+    rev: v1.3.5
+    hooks:
+      - id: rubocop
+      - id: foodcritic
+      - id: cookstyle
+      - id: rspec
+      - id: chef-cookbook-version
