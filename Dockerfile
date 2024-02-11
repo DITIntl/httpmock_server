@@ -2,10 +2,11 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.2.3
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+
 ARG RAILS_MASTER_KEY=""
 ARG GIT_COMMIT=""
 ARG TEST_1="test 3"
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
 # Rails app lives here
 WORKDIR /rails
