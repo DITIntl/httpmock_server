@@ -1,0 +1,6 @@
+AllCops:
+  NewCops: enable
+
+require:
+  - rubocop-capybara
+  - rubocop-rails
