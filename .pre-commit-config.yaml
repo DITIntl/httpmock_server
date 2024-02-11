@@ -18,3 +18,12 @@ repos:
       # Language syntax/formatting
       - id: check-yaml
         stages: [commit]
+  - repo: local
+    hooks:
+      - id: rubocop
+        name: Check Ruby style with rubocop
+        entry: .hooks/rubocop.sh
+        language: script
+        types: ['ruby']
+        stages: [ commit ]
+        verbose: true
