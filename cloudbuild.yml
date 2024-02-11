@@ -1,4 +1,11 @@
 steps:
+  - id: "Pre"
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        echo $COMMIT_SHA
   - name: "gcr.io/kaniko-project/executor:latest"
     id: "Build image and push"
     args:
@@ -6,8 +13,8 @@ steps:
       - "--destination=us.gcr.io/$PROJECT_ID/$_SERVICE_NAME:latest"
       - "--dockerfile=Dockerfile"
       - "--context=."
-      - "--build-arg GIT_COMMIT=$COMMIT_SHA"
-      - "--build-arg TEST_1=2"
+      - --build-arg=GIT_COMMIT=$COMMIT_SHA
+      - --build-arg=TEST_1=2
       - "--build-arg RAILS_MASTER_KEY=$_RAILS_MASTER_KEY"
       - "--snapshotMode=time"
 
