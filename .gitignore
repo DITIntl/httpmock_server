@@ -36,5 +36,5 @@
 /config/production.key
 .idea
 tmp
-
 /config/credentials/production.key
+.env

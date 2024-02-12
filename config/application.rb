@@ -10,6 +10,9 @@ require 'primer/view_components'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require 'google/cloud/logging/rails' if ENV['RAILS_ENV'] == 'production'
+Rails.logger = Logger.new($stdout) if ENV['RAILS_ENV'] != 'production'
+
 module HttpMock
   # Application configuration
   class Application < Rails::Application

@@ -80,3 +80,15 @@ gem 'pg', '~> 1.5'
 gem 'google-cloud-logging', '~> 2.3', group: :production
 
 gem 'stackdriver', '~> 0.21.1', group: :production
+
+gem 'uptrace', '~> 1.4'
+
+gem 'dotenv', '~> 3.0'
+
+gem 'opentelemetry-instrumentation-rails', '~> 0.30.0'
+
+gem 'opentelemetry-instrumentation-active_record', '~> 0.7.0'
+
+gem 'opentelemetry-sdk', '~> 1.4'
+
+gem 'opentelemetry-semantic_conventions', '~> 1.10'
