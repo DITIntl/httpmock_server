@@ -92,3 +92,5 @@ gem 'opentelemetry-instrumentation-active_record', '~> 0.7.0'
 gem 'opentelemetry-sdk', '~> 1.4'
 
 gem 'opentelemetry-semantic_conventions', '~> 1.10'
+
+gem 'simplecov', require: false, group: :test
