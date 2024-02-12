@@ -9,7 +9,12 @@ httpmock
 
 This is a mock server which can be used to test HTTP requests and responses.
 
-# README
+## Credits
 
-- Color Palete: https://coolors.co/palette/606c38-283618-fefae0-dda15e-bc6c25
+- Color Palette: https://coolors.co/palette/606c38-283618-fefae0-dda15e-bc6c25
 - Icon: https://www.svgrepo.com/svg/361904/json-ld
+
+
+## License
+
+This project is licensed under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3 - see the [LICENSE](LICENSE) file for details
