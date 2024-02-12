@@ -94,3 +94,5 @@ gem 'opentelemetry-sdk', '~> 1.4'
 gem 'opentelemetry-semantic_conventions', '~> 1.10'
 
 gem 'simplecov', require: false, group: :test
+
+gem 'simplecov-cobertura', '~> 2.1'
