@@ -9,7 +9,7 @@ Uptrace.configure_opentelemetry(dsn: ENV.fetch('UPTRACE_DSN', '')) do |c|
   # c is OpenTelemetry::SDK::Configurator
   c.use_all
   c.service_name = 'httpmock'
-  c.service_version = ENV.fetch('VERSION', 'dev')
+  c.service_version = ENV.fetch('RAILS_APP_VERSION', 'dev')
   c.resource = OpenTelemetry::SDK::Resources::Resource.create(
     OpenTelemetry::SemanticConventions::Resource::DEPLOYMENT_ENVIRONMENT => Rails.env.to_str
   )
