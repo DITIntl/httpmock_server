@@ -15,7 +15,7 @@ ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
-    VERSION=$GIT_COMMIT
+    VERSION=$GIT_COMMIT \
     RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 
