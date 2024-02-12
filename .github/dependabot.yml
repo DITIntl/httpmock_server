@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: bundler
+    directory: '/'
+    schedule:
+      interval: monthly
+      time: '01:00'
+    open-pull-requests-limit: 10
+    versioning-strategy: lockfile-only
+    allow:
+      - dependency-type: direct
+      - dependency-type: indirect
+    labels:
+      - 'dependencies'
+      - 'ruby'
+
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: monthly
+      time: '01:00'
+    labels:
+      - 'dependencies'
+      - 'gh-action'
