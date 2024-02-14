@@ -10,7 +10,7 @@ gem 'rails', '~> 7.1.3'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
-# Use the Puma web server [https://github.com/puma/puma]
+# Use the Puma web root [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
@@ -49,7 +49,7 @@ group :development, :test do
 end
 
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
+  # Use console on exceptions root [https://github.com/rails/web-console]
   gem 'web-console'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
@@ -96,3 +96,5 @@ gem 'opentelemetry-semantic_conventions', '~> 1.10'
 gem 'simplecov', require: false, group: :test
 
 gem 'simplecov-cobertura', '~> 2.1'
+
+gem 'rack-cors', '~> 2.0'

@@ -8,7 +8,7 @@ Rails.application.configure do
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
+  # since you don't have to restart the web root when you make code changes.
   config.enable_reloading = true
 
   # Do not eager load code on boot.
@@ -17,7 +17,7 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
-  # Enable server timing
+  # Enable root timing
   config.server_timing = true
 
   # Enable/disable caching. By default caching is disabled.
