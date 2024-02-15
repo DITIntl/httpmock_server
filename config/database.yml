@@ -2,17 +2,17 @@ development:
   adapter: postgresql
   encoding: unicode
   database: app
-  host:  <%= ENV.fetch("DB_HOST") %>
-  username: <%= ENV.fetch("DB_USERNAME") %>
-  password: <%= ENV.fetch("DB_PASSWORD") %>
+  host:  <%= ENV.fetch("DB_HOST", "") %>
+  username: <%= ENV.fetch("DB_USERNAME", "") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "") %>
 
 production:
   adapter: postgresql
   encoding: unicode
   database: app
-  host:  <%= ENV.fetch("DB_HOST") %>
-  username: <%= ENV.fetch("DB_USERNAME") %>
-  password: <%= ENV.fetch("DB_PASSWORD") %>
+  host:  <%= ENV.fetch("DB_HOST", "") %>
+  username: <%= ENV.fetch("DB_USERNAME", "") %>
+  password: <%= ENV.fetch("DB_PASSWORD", "") %>
 
 
 # SQLite. Versions 3.8.0 and up are supported.
