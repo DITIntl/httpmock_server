@@ -35,9 +35,12 @@ class ServerControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should DELETE /server' do
+    start = DateTime.now
     delete '/server',
-           headers: { 'Accept' => content_type_json, 'response-headers' => '[{"Content-Type": "application/json"}]' }
+           headers: { 'Accept' => content_type_json, 'response-delay' => '350',
+                      'response-headers' => '[{"Content-Type": "application/json"}]' }
     assert_response :success
     assert_equal content_type_json, @response.media_type
+    assert time_diff_milli(start) >= 350
   end
 end
