@@ -6,6 +6,8 @@ httpmock
 [![GitHub license](https://img.shields.io/github/license/NdoleStudio/httpmock?color=brightgreen)](https://github.com/NdoleStudio/httpmock/blob/master/LICENSE)
 [![Codecov](https://codecov.io/gh/NdoleStudio/httpmock/branch/main/graph/badge.svg)](https://codecov.io/gh/NdoleStudio/httpmock)
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/1185i.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+![Docker Pulls](https://img.shields.io/docker/pulls/ndolestudio/httpmock)
+
 
 This is a mock server which can be used to test HTTP requests and responses.
 
