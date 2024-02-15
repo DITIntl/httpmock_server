@@ -18,5 +18,8 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+    def time_diff_milli(start)
+      (DateTime.now - start) * 24 * 60 * 60 * 1000.0
+    end
   end
 end

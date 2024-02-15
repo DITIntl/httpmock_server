@@ -9,7 +9,7 @@
 
 # Ignore all environment files (except templates).
 /.env*
-!/.env*.erb
+!.env.production
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -37,5 +37,4 @@
 .idea
 tmp
 /config/credentials/production.key
-.env
 coverage
