@@ -4,6 +4,8 @@
 class ServerController < ApplicationController
   skip_forgery_protection
   def all
+    sleep(http_response_delay / 1000.0)
+
     http_response_headers.each do |key, value|
       response.set_header(key, value)
     end
@@ -35,5 +37,12 @@ class ServerController < ApplicationController
     end
 
     headers
+  end
+
+  def http_response_delay
+    delay = request.headers['response-delay']
+    return 0 if delay.blank?
+
+    [delay.to_i, 10_000].min
   end
 end
