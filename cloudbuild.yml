@@ -19,7 +19,7 @@ steps:
         gcloud run deploy $_SERVICE_NAME \
         --image=us.gcr.io/$PROJECT_ID/$_SERVICE_NAME:$SHORT_SHA \
         --region=$_REGION --platform managed --allow-unauthenticated \
-        --port=3000
+        --port=80
 options:
   substitutionOption: ALLOW_LOOSE
 
