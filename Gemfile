@@ -59,6 +59,8 @@ group :development do
   # gem "spring"
 
   gem 'rubocop', require: false
+
+  gem 'debugbar'
 end
 
 group :test do
