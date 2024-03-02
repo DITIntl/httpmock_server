@@ -1,6 +1,6 @@
 <div style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 200px);">
   <div class="border rounded p-6 text-center">
-    <%= form_with model: @user, url: auth_post_sign_up_path do |form| %>
+    <%= form_with model: @user, url: auth_sign_up_path do |form| %>
       <%= render partial: "shared/form_errors", locals: { object: form.object } %>
       <div>
         <%= form.label :email %>
