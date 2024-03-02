@@ -30,6 +30,11 @@ jobs:
       - name: Rubocop
         run: bundle exec rubocop
 
+      - name: Migrate Test DB
+        run: bundle exec rake db:migrate RAILS_ENV=test
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
       - name: Run tests
         run: bundle exec rake test
         env:
