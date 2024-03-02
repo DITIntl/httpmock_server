@@ -28,4 +28,35 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  controllers:
+    active_sessions:
+      deleted: "Session was deleted successfully."
+      signed_out: "You have been signed out from this devices."
+    auth:
+      confirmation_email: "Please check your email for confirmation instructions."
+      invalid_credentials: "Invalid email or password."
+      unconfirmed_account: "Confirm your account before signing in."
+      signed_in: "Signed in successfully."
+      signed_out: "Signed out successfully."
+      already_signed_in: "You are already signed in."
+      login_required: "You need to sign in or sign up before continuing."
+    confirmation:
+      confirmed: "Your account has been successfully confirmed."
+      confirmation_server_error: "There was an error confirming your account."
+      invalid_token: "We could not find a user with that email or that email has already been confirmed."
+    passwords:
+      confirm_email: "You must confirm your email before you can continue"
+      invalid_token: "Invalid or expired password reset token."
+      instructions_email: "If that user exists we've sent instructions to their email."
+      reset_successful: "Your password has been changed successfully."
+    users:
+      updated: "Your account was updated successfully."
+      deleted: "Your account has been deleted successfully."
+      invalid_password: "Your password is not correct."
+
+  mailers:
+    user:
+      confirmation:
+        subject: "Confirm your email address - httpmock"
+      password_reset:
+        subject: "Reset your password - httpmock"

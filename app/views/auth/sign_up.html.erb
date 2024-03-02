@@ -1,6 +1,7 @@
 <div style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 200px);">
   <div class="border rounded p-6 text-center">
-    <%= form_with url: auth_post_login_path, scope: :user do |form| %>
+    <%= form_with model: @user, url: auth_post_sign_up_path do |form| %>
+      <%= render partial: "shared/form_errors", locals: { object: form.object } %>
       <div>
         <%= form.label :email %>
         <%= form.email_field :email, required: true %>
@@ -10,10 +11,10 @@
         <%= form.password_field :password, required: true %>
       </div>
       <div>
-        <%= form.label :remember_me %>
-        <%= form.check_box :remember_me %>
+        <%= form.label :password_confirmation %>
+        <%= form.password_field :password_confirmation, required: true %>
       </div>
-      <%= form.submit "Sign In" %>
+      <%= form.submit "Sign Up" %>
     <% end %>
   </div>
 </div>

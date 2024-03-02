@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-mount Debugbar::Engine => Debugbar.config.prefix if defined? Debugbar
-
 Rails.application.routes.draw do
+  mount Debugbar::Engine => Debugbar.config.prefix if defined? Debugbar
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -17,4 +16,21 @@ Rails.application.routes.draw do
                                 constraints: { status_code: /[0-9]{3}/ }
 
   get '/auth/login', action: :login, controller: 'auth'
+  get '/auth/sign-up', action: :sign_up, controller: 'auth'
+  post '/auth/login', action: :post_login, controller: 'auth'
+  post '/auth/sign-up', action: :post_sign_up, controller: 'auth'
+  delete '/auth/logout', action: :delete_logout, controller: 'auth'
+
+  put '/account', action: :update, controller: 'users'
+  get '/account', action: :edit, controller: 'users'
+  delete '/account', action: :destroy, controller: 'users'
+
+  resources :active_sessions, only: [:destroy] do
+    collection do
+      delete 'destroy_all'
+    end
+  end
+
+  resources :confirmations, only: %i[create edit new], param: :confirmation_token
+  resources :passwords, only: %i[create edit new update], param: :password_reset_token
 end
