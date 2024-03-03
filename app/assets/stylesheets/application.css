@@ -18,3 +18,11 @@
 @supports (font-variation-settings: normal) {
     :root { font-family: 'Inter var', sans-serif; }
 }
+
+
+a.text-decoration-none {
+  text-decoration: none;
+}
+a.text-decoration-none:hover {
+  text-decoration: none;
+}

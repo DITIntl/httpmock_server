@@ -5,6 +5,7 @@ class User < ApplicationRecord
   CONFIRMATION_TOKEN_EXPIRATION = 10.minutes
   PASSWORD_RESET_TOKEN_EXPIRATION = 10.minutes
   MAILER_FROM_EMAIL = 'support@httpmock.dev'
+  EMAIL_PASSWORD_PROVIDER = 'email/password'
 
   has_secure_password
 
@@ -19,7 +20,7 @@ class User < ApplicationRecord
   validates :unconfirmed_email, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
 
   def confirm!
-    return false if unconfirmed_or_reconfirming
+    return false unless unconfirmed_or_reconfirming?
 
     return false if unconfirmed_email.present? && !update(email: unconfirmed_email, unconfirmed_email: nil)
 

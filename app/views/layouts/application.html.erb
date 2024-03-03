@@ -7,8 +7,8 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag("primer_view_components") %>
-    <%= javascript_include_tag("primer_view_components") %>
     <% if defined? debugbar_javascript %>
       <%= debugbar_javascript %>
     <% end %>
@@ -18,24 +18,47 @@
   </head>
 
   <body style="min-height: 100vh; min-width: 100vw;">
+    <% if flash.count > 0 %>
+      <%= render(Primer::Alpha::Banner.new(full: true, dismiss_scheme: :remove, icon:  nil))  do %>
+        <% flash.first.then do |_, msg| %>
+          <%= msg %>
+        <% end %>
+      <% end %>
+    <% end %>
     <header class="Header border-bottom color-bg-default">
       <div class="Header-item mr-0">
-        <img height="40" alt="httpmock.dev logo" src="<%= image_url("logo.svg") %>" width="40" />
-      </div>
-      <div class="Header-item">
-        <h1 style="color: #283618">httpmock</h1>
-        <%= render(Primer::Beta::Octicon.new(:"sign-in", size: :medium)) %>
-      </div>
-      <div class="Header-item Header-item--full"></div>
-      <div class="Header-item mr-0">
-        <a class="Button Button--large Button--primary"  href="/auth/login">
-          <%= render(Primer::Beta::Octicon.new(:"sign-in", size: :small)) %>
-          Login
+        <a href="/" class="text-decoration-none d-flex">
+          <img height="40" alt="httpmock.dev logo" src="<%= image_url("logo.svg") %>" width="40" />
+          <h1 style="color: #283618">httpmock</h1>
         </a>
       </div>
+      <div class="Header-item Header-item--full"></div>
+      <% if user_signed_in? %>
+        <div class="Header-item mr-0">
+          <%= form_with url: auth_logout_path, method: :delete do |_| %>
+            <%= render(Primer::Beta::Button.new( scheme: :default, type: :submit )) do |_c| %>
+              <%= render(Primer::Beta::Octicon.new(:"sign-out", size: :small)) %>
+              Logout
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="Header-item ml-4">
+          <a class="Header-link" style="color: #283618" href="/auth/login">
+            Login
+          </a>
+        </div>
+        <div class="Header-item mr-0">
+          <a class="Button Button--primary"  href="/auth/sign-up">
+            <%= render(Primer::Beta::Octicon.new(:"sign-in", size: :small)) %>
+            Get Started
+          </a>
+        </div>
+      <% end %>
     </header>
     <main>
       <%= yield %>
     </main>
+    <%= javascript_include_tag("primer_view_components") %>
   </body>
 </html>

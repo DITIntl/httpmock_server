@@ -23,6 +23,7 @@ module HttpMock
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
+    config.autoload_paths += Dir[Rails.root.join('app/forms/**/')]
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -33,5 +34,18 @@ module HttpMock
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.action_mailer.default_url_options = { host: 'httpmock.dev' }
+
+    # Email settings
+    if ENV.fetch('SMTP_HOST', nil).present?
+      config.action_mailer.delivery_method = :smtp
+      config.action_mailer.smtp_settings = {
+        host: ENV.fetch('SMTP_HOST'),
+        address: ENV.fetch('SMTP_HOST'),
+        port: ENV.fetch('SMTP_PORT'),
+        user_name: ENV.fetch('SMTP_USERNAME'),
+        password: ENV.fetch('SMTP_PASSWORD'),
+        authentication: :login
+      }
+    end
   end
 end
