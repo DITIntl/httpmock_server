@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :active_sessions, dependent: :destroy
+  has_many :projects, dependent: :destroy
 
   attr_accessor :current_password
 

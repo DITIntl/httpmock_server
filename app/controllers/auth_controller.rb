@@ -6,7 +6,6 @@ class AuthController < ApplicationController
 
   def post_sign_up
     @user = User.new(user_params)
-
     @user.key = SecureRandom.hex(16)
     @user.provider = User::EMAIL_PASSWORD_PROVIDER
 
@@ -32,7 +31,7 @@ class AuthController < ApplicationController
     end
 
     if @user.authenticate(params[:user][:password])
-      after_login_path = session[:user_return_to] || root_path
+      after_login_path = session[:user_return_to] || projects_path
       active_session = login_user @user
       remember(active_session) if params[:user][:remember_me] == '1'
       return redirect_to after_login_path, notice: I18n.t('controllers.auth.signed_in')

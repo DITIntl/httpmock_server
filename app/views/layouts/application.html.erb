@@ -32,12 +32,34 @@
           <h1 style="color: #283618">httpmock</h1>
         </a>
       </div>
+      <% if user_signed_in? && !current_user.projects.count.zero? %>
+        <div class="Header-item ml-4">
+          <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none)) do |menu|  %>
+            <% menu.with_show_button do |button| %>
+              <% button.with_trailing_action_icon(icon: :"triangle-down") %>
+              Select Project
+            <% end %>
+            <% current_user.projects.all.each do |project|  %>
+              <% menu.with_item(label: project.name) do |item| %>
+                <% if project.id == 1 %>
+                  <% item.with_trailing_visual_label(scheme: :accent, inline: true).with_content("active") %>
+                <% end %>
+            <% end %>
+            <% end %>
+            <% menu.with_divider %>
+            <% menu.with_item(tag: :a, content_arguments: { href: projects_new_path }) do %>
+              <%= render(Primer::Beta::Octicon.new(:"plus", size: :small)) %>
+              <span class="text-bold">Create Project</span>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
       <div class="Header-item Header-item--full"></div>
       <% if user_signed_in? %>
         <div class="Header-item mr-0">
           <%= form_with url: auth_logout_path, method: :delete do |_| %>
             <%= render(Primer::Beta::Button.new( scheme: :default, type: :submit )) do |_c| %>
-              <%= render(Primer::Beta::Octicon.new(:"sign-out", size: :small)) %>
+              <%= render(Primer::Beta::Octicon.new(:"plus", size: :small)) %>
               Logout
             <% end %>
           <% end %>

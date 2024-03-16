@@ -33,4 +33,8 @@ Rails.application.routes.draw do
 
   resources :confirmations, only: %i[create edit new], param: :confirmation_token
   resources :passwords, only: %i[create edit new update], param: :password_reset_token
+
+  get '/projects/new', action: :new, controller: 'projects'
+  get '/projects', action: :index, controller: 'projects'
+  post '/projects', action: :create, controller: 'projects'
 end

@@ -53,6 +53,9 @@ en:
       updated: "Your account was updated successfully."
       deleted: "Your account has been deleted successfully."
       invalid_password: "Your password is not correct."
+    projects:
+      no_project: "Create a new project to get started."
+      created: "Project was created successfully."
 
   mailers:
     user:
@@ -67,6 +70,10 @@ en:
       sign_up_title: "Create Account"
     confirmation:
       confirm_title: "Confirm Your Email"
+    projects:
+      new_title: "Create Project"
+      edit_title: "Edit Project"
+      delete_title: "Delete Project"
 
   forms:
     auth:
@@ -79,3 +86,9 @@ en:
       sign_up: "Create Account"
     confirmations:
       confirm: "Confirm Email"
+    project:
+      name: "Project Name"
+      description: "Project Description"
+      create: "Create Project"
+      update: "Update Project"
+      delete: "Delete Project"

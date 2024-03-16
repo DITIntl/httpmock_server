@@ -26,3 +26,7 @@ a.text-decoration-none {
 a.text-decoration-none:hover {
   text-decoration: none;
 }
+
+.text-secondary {
+    color: #656d76;
+}
