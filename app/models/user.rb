@@ -16,6 +16,8 @@ class User < ApplicationRecord
 
   before_save :downcase_email
   before_save :downcase_unconfirmed_email
+  before_create :generate_api_key
+  before_create :set_provider
 
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { scope: :provider }
   validates :unconfirmed_email, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
@@ -67,6 +69,14 @@ class User < ApplicationRecord
   end
 
   private
+
+  def generate_api_key
+    self.key = SecureRandom.hex(32)
+  end
+
+  def set_provider
+    self.provider = EMAIL_PASSWORD_PROVIDER
+  end
 
   def downcase_email
     self.email = email.downcase

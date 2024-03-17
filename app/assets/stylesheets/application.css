@@ -14,11 +14,15 @@
  *= require_self
  */
 
-:root { font-family: 'Inter', sans-serif; }
+:root {
+    font-family: 'Inter', sans-serif;
+    --overlay-padding-condensed: 6px;
+    --overlay-paddingBlock-condensed: 2px;
+}
+
 @supports (font-variation-settings: normal) {
     :root { font-family: 'Inter var', sans-serif; }
 }
-
 
 a.text-decoration-none {
   text-decoration: none;
@@ -27,6 +31,9 @@ a.text-decoration-none:hover {
   text-decoration: none;
 }
 
-.text-secondary {
-    color: #656d76;
+.position-absolute.tooltip-s {
+ padding: 16px !important;
+}
+.position-absolute.tooltip-s::backdrop{
+    padding-left: 16px !important;
 }

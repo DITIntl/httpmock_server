@@ -1,0 +1,9 @@
+<div style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 200px);">
+  <div class="border rounded p-6" style="min-width: 400px">
+    <%= render(Primer::Beta::Heading.new(tag: :h1, mb:-3)) { t('views.projects.edit_title') } %>'
+    <p class="mb-3 fgColor-muted">Your mocked endpoints are grouped into projects for better organization.</p>
+    <%= primer_form_with(url: update_projects_path(@project.id), method: :patch, model: @project) do |f| %>
+      <%= render(EditProjectForm.new(f)) %>
+    <% end %>
+  </div>
+</div>

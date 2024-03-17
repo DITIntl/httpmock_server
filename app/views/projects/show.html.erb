@@ -1,0 +1,34 @@
+<div class="container-xl" style="min-height: calc(100vh - 200px);">
+  <%= render(Primer::Beta::Subhead.new(class: 'mt-12', spacious: true)) do |component| %>
+    <% component.with_heading(size: :large, tag: :h1) do %>
+      <%= @project.name %>
+    <% end %>
+    <% component.with_description do %>
+      <%= @project.description %>
+    <% end %>
+    <% component.with_actions do %>
+      <%= render(Primer::Beta::Button.new(scheme: :primary, classes: 'mr-2', tag: :a, href: create_projects_path)) do |button| %>
+        <% button.with_leading_visual_icon(icon: :plus) %>
+        Add Endpoint
+      <% end %>
+      <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none, anchor_side: :outside_bottom)) do |menu| %>
+        <% menu.with_show_button(icon: :gear, "aria-label": "Settings") %>
+        <% menu.with_item(tag: :a, content_arguments: { href: edit_projects_path(@project.id) }) do %>
+          <%= render(Primer::Beta::Octicon.new(:pencil)) %>
+          <span class="ml-2">Edit project</span>
+        <% end %>
+        <% menu.with_item(scheme: :danger, href: delete_projects_path(@project.id), form_arguments: { method: :delete})  do %>
+          <%= render(Primer::Beta::Octicon.new(:trash)) %>
+          <span class="ml-2">Delete project</span>
+        <% end %>
+      <%end %>
+    <% end %>
+  <% end %>
+
+
+  <%=
+    render(Primer::Beta::BorderBox.new(padding: :default)) do |box|
+      box.with_row(scheme: :default) { "First Link" }
+    end
+  %>
+</div>

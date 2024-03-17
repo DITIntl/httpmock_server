@@ -6,9 +6,6 @@ class AuthController < ApplicationController
 
   def post_sign_up
     @user = User.new(user_params)
-    @user.key = SecureRandom.hex(16)
-    @user.provider = User::EMAIL_PASSWORD_PROVIDER
-
     if @user.save
       @user.send_confirmation_email!
       redirect_to root_path, notice: I18n.t('controllers.auth.confirmation_email')

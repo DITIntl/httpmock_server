@@ -6,8 +6,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag("primer_view_components") %>
     <% if defined? debugbar_javascript %>
       <%= debugbar_javascript %>
@@ -15,69 +13,82 @@
     <link rel="preconnect" href="https://rsms.me/">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/21.1.1/primer.css" integrity="sha512-DQRZcDaNuIkb4JiH6PHalnncWllAK5txkJVocLdyfglJSavW/HxQaJRJeRw5eEPnp+kD1QImSxCwUiOsRrCMEw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
   </head>
-
-  <body style="min-height: 100vh; min-width: 100vw;">
-    <% if flash.count > 0 %>
-      <%= render(Primer::Alpha::Banner.new(full: true, dismiss_scheme: :remove, icon:  nil))  do %>
-        <% flash.first.then do |_, msg| %>
-          <%= msg %>
-        <% end %>
-      <% end %>
-    <% end %>
-    <header class="Header border-bottom color-bg-default">
-      <div class="Header-item mr-0">
-        <a href="/" class="text-decoration-none d-flex">
-          <img height="40" alt="httpmock.dev logo" src="<%= image_url("logo.svg") %>" width="40" />
-          <h1 style="color: #283618">httpmock</h1>
-        </a>
-      </div>
-      <% if user_signed_in? && !current_user.projects.count.zero? %>
-        <div class="Header-item ml-4">
-          <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none)) do |menu|  %>
-            <% menu.with_show_button do |button| %>
-              <% button.with_trailing_action_icon(icon: :"triangle-down") %>
-              Select Project
-            <% end %>
-            <% current_user.projects.all.each do |project|  %>
-              <% menu.with_item(label: project.name) do |item| %>
-                <% if project.id == 1 %>
-                  <% item.with_trailing_visual_label(scheme: :accent, inline: true).with_content("active") %>
+  <body style="min-height: 100vh; width: 100vw;">
+    <div class="border-bottom">
+      <header class="Header container-xl px-0 color-bg-default">
+        <div class="Header-item mr-0">
+          <a href="/" class="text-decoration-none d-flex">
+            <img height="40" alt="httpmock.dev logo" src="<%= image_url("logo.svg") %>" width="40" />
+            <h1 style="color: #283618">httpmock</h1>
+          </a>
+        </div>
+        <% if user_signed_in? && !@project.blank? && !@project.id.blank? %>
+          <div class="Header-item ml-4">
+            <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none)) do |menu|  %>
+              <% menu.with_show_button(size: :large, scheme: :secondary) do |button| %>
+                <% button.with_trailing_action_icon(icon: :"triangle-down") %>
+                <% current_user.projects.all.each do |project|  %>
+                  <% if project.id == @project.id %>
+                    <%= project.name %>
+                  <% end %>
                 <% end %>
+              <% end %>
+              <% current_user.projects.all.each do |project|  %>
+                <% menu.with_item(label: project.name, tag: :a, content_arguments: { href: show_projects_path(project.id) }) do |item| %>
+                  <% if project.id == @project.id %>
+                    <% item.with_trailing_visual_label(scheme: :accent, inline: true).with_content("active") %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <% menu.with_divider %>
+              <% menu.with_item(tag: :a, content_arguments: { href: new_projects_path }) do %>
+                <%= render(Primer::Beta::Octicon.new(:"plus", size: :small)) %>
+                <span class="text-bold">Create Project</span>
+              <% end %>
             <% end %>
+          </div>
+        <% end %>
+        <div class="Header-item Header-item--full"></div>
+        <% if user_signed_in? %>
+          <div class="Header-item mr-0">
+            <%= form_with url: auth_logout_path, method: :delete do |_| %>
+              <%= render(Primer::Beta::Button.new( scheme: :default, type: :submit )) do |_c| %>
+                <%= render(Primer::Beta::Octicon.new(:"sign-out", size: :small)) %>
+                Logout
+              <% end %>
             <% end %>
-            <% menu.with_divider %>
-            <% menu.with_item(tag: :a, content_arguments: { href: projects_new_path }) do %>
-              <%= render(Primer::Beta::Octicon.new(:"plus", size: :small)) %>
-              <span class="text-bold">Create Project</span>
+          </div>
+        <% else %>
+          <div class="Header-item ml-4">
+            <a class="Header-link" style="color: #283618" href="/auth/login">
+              Login
+            </a>
+          </div>
+          <div class="Header-item mr-0">
+            <a class="Button Button--primary"  href="/auth/sign-up">
+              <%= render(Primer::Beta::Octicon.new(:"sign-in", size: :small)) %>
+              Get Started
+            </a>
+          </div>
+        <% end %>
+      </header>
+    </div>
+
+    <% if flash.count > 0 %>
+      <div class="<%= flash.first[0] == 'alert'? 'color-bg-danger': 'color-bg-accent' %>">
+        <div class="container-xl color-bg-accent">
+          <%= render(Primer::Alpha::Banner.new(full: true, scheme: flash.first[0] == 'alert'? :danger : :default, dismiss_scheme: :remove, icon:  nil))  do %>
+            <% flash.first.then do |name, msg| %>
+              <%= msg %>
+              <%= name %>
             <% end %>
           <% end %>
         </div>
-      <% end %>
-      <div class="Header-item Header-item--full"></div>
-      <% if user_signed_in? %>
-        <div class="Header-item mr-0">
-          <%= form_with url: auth_logout_path, method: :delete do |_| %>
-            <%= render(Primer::Beta::Button.new( scheme: :default, type: :submit )) do |_c| %>
-              <%= render(Primer::Beta::Octicon.new(:"plus", size: :small)) %>
-              Logout
-            <% end %>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="Header-item ml-4">
-          <a class="Header-link" style="color: #283618" href="/auth/login">
-            Login
-          </a>
-        </div>
-        <div class="Header-item mr-0">
-          <a class="Button Button--primary"  href="/auth/sign-up">
-            <%= render(Primer::Beta::Octicon.new(:"sign-in", size: :small)) %>
-            Get Started
-          </a>
-        </div>
-      <% end %>
-    </header>
+      </div>
+    <% end %>
     <main>
       <%= yield %>
     </main>

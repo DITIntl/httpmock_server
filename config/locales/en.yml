@@ -55,7 +55,11 @@ en:
       invalid_password: "Your password is not correct."
     projects:
       no_project: "Create a new project to get started."
-      created: "Project was created successfully."
+      created: "Your project was created successfully."
+      deleted: "Your project was deleted successfully."
+      updated: "Your project was updated successfully."
+      update_error: "There was an error updating your project."
+      create_error: "There was an error creating your project."
 
   mailers:
     user:
