@@ -36,7 +36,6 @@
     </div>
   <% end %>
 
-
   <% if @endpoints.count.positive? %>
     <%= render(Primer::Beta::Heading.new(tag: :h3, mt: 6, mb: 2)) do %>
       <%= render(Primer::Beta::Octicon.new(:link, size: :small)) %>
@@ -47,20 +46,16 @@
       <% @endpoints.each do |endpoint| %>
         <% box.with_row(scheme: :default) do %>
           <div class="d-flex">
-            <%= render(Primer::Beta::Label.new(size: :large, scheme: :info, inline: true)) { endpoint.request_method } %>
-            <%= render(Primer::Beta::Heading.new(tag: :h4, ml: 2)) { "https://#{@project.subdomain}.httpmock.dev#{endpoint.request_path}"  } %>
+            <%= render(Primer::Beta::Label.new(size: :large, scheme: request_method_scheme(endpoint.request_method), inline: true)) { endpoint.request_method } %>
+            <%= render(Primer::Beta::Heading.new(tag: :h4, classes: "wb-break-all", ml: 2)) { "https://#{@project.subdomain}.httpmock.dev#{endpoint.request_path}"  } %>
             <%= render(Primer::Beta::ClipboardCopyButton.new(id: "clipboard-button", tooltip: :label, size: :'small',  aria: { label: "Copy" }, ml:3, value: "https://#{@project.subdomain}.httpmock.dev#{endpoint.request_path}")) do | button|  %>
               <% button.with_tooltip(text: "Copy to clipboard") %>
             <% end %>
           </div>
           <p class="fgColor-muted mt-1"><%= endpoint.description %></p>
-          <div class="d-flex">
-            <%= render(Primer::Beta::Button.new(
-              scheme: :primary,
-              size: :small,
-              tag: :a,
-              )) do |_c| %>
-              <%= render(Primer::Beta::Counter.new(count: 12, round: false, limit: nil, scheme: :primary)) %>
+          <div class="d-flex flex-items-center">
+            <%= render(Primer::Beta::Button.new(scheme: :primary, size: :small, tag: :a, href: show_endpoint_path(@project.id, endpoint.id))) do |_c| %>
+              <%= render(Primer::Beta::Counter.new(count: endpoint.requests.count, round: false, limit: nil, scheme: :primary)) %>
               Requests
             <% end %>
             <%= render(Primer::Beta::Button.new(
@@ -68,19 +63,21 @@
               size: :small,
               ml: 2,
               tag: :a,
+              href: edit_endpoint_path(@project.id, endpoint.id),
               )) do |button| %>
               <% button.with_leading_visual_icon(icon: :pencil) %>
               Edit
             <% end %>
-            <%= render(Primer::Beta::Button.new(
-              scheme: :danger,
-              size: :small,
-              ml: 2,
-              tag: :a,
-              )) do |button| %>
-              <% button.with_leading_visual_icon(icon: :trash) %>
-              Delete
-            <% end %>
+            <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none, ml:2, anchor_side: :outside_bottom)) do |menu| %>
+              <% menu.with_show_button(icon: :gear, size: :small, "aria-label": "Endpoint settings") %>
+              <% menu.with_item(scheme: :danger, href: delete_endpoint_path(@project.id, endpoint.id), form_arguments: { method: :delete})  do %>
+                <%= render(Primer::Beta::Octicon.new(:trash)) %>
+                <span class="ml-2">Delete endpoint</span>
+              <% end %>
+            <%end %>
+            <span class="ml-2">
+              Updated <%= render(Primer::Beta::RelativeTime.new(datetime: endpoint.updated_at)) %>
+            </span>
           </div>
         <% end %>
       <% end %>

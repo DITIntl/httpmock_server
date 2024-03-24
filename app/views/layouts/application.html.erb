@@ -7,14 +7,25 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag("primer_view_components") %>
-    <% if defined? debugbar_javascript %>
-      <%= debugbar_javascript %>
-    <% end %>
+<!--    <%# if defined? debugbar_javascript %>
+      <%#= debugbar_javascript %>
+    <%# end %>-->
+    <link rel="stylesheet" href="https://unpkg.com/@speed-highlight/core/dist/themes/github-dark.css">
     <link rel="preconnect" href="https://rsms.me/">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/21.1.1/primer.css" integrity="sha512-DQRZcDaNuIkb4JiH6PHalnncWllAK5txkJVocLdyfglJSavW/HxQaJRJeRw5eEPnp+kD1QImSxCwUiOsRrCMEw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+
+    <script type="module">
+        import {highlightAll} from "https://unpkg.com/@speed-highlight/core@1.2.6/dist/index.js";
+        const highlight = () => {
+            highlightAll()
+        }
+        window.onload = highlight
+        document.addEventListener("load", highlight)
+        document.addEventListener("turbolinks:load", highlight)
+    </script>
   </head>
   <body style="min-height: 100vh; width: 100vw;">
     <div class="border-bottom">

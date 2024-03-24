@@ -41,9 +41,13 @@ Rails.application.routes.draw do
   get '/projects/:id/edit', action: :edit, controller: 'projects', as: 'edit_project'
   delete '/projects/:id', action: :delete, controller: 'projects', as: 'delete_project'
   post '/projects', action: :create, controller: 'projects', as: 'create_project'
-  patch '/projects/:id', action: :patch, controller: 'projects', as: 'update_project'
+  patch '/projects/:id', action: :update, controller: 'projects', as: 'update_project'
 
-  get  '/projects/:project_id/endpoints/new', action: :new, controller: :endpoints, as: 'new_endpoint'
+  get '/projects/:project_id/endpoints/new', action: :new, controller: :endpoints, as: 'new_endpoint'
+  get '/projects/:project_id/endpoints/:id/edit', action: :edit, controller: :endpoints, as: 'edit_endpoint'
+  get '/projects/:project_id/endpoints/:id', action: :show, controller: :endpoints, as: 'show_endpoint'
+  patch '/projects/:project_id/endpoints/:id/edit', action: :update, controller: :endpoints, as: 'update_endpoint'
+  delete '/projects/:project_id/endpoints/:id', action: :delete, controller: :endpoints, as: 'delete_endpoint'
   post '/projects/:project_id/endpoints', action: :create, controller: :endpoints, as: 'create_endpoint'
 end
 # rubocop:enable Metrics/BlockLength

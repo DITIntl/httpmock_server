@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_23_090534) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_24_154028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -50,9 +50,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_23_090534) do
     t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "subdomain", null: false
-    t.index ["subdomain"], name: "index_projects_on_subdomain", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.bigint "endpoint_id", null: false
+    t.string "url", null: false
+    t.string "method", null: false
+    t.text "body"
+    t.text "headers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["endpoint_id"], name: "index_requests_on_endpoint_id"
+    t.index ["project_id"], name: "index_requests_on_project_id"
+    t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -73,4 +86,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_23_090534) do
   add_foreign_key "endpoints", "projects"
   add_foreign_key "endpoints", "users"
   add_foreign_key "projects", "users", on_delete: :cascade
+  add_foreign_key "requests", "endpoints"
+  add_foreign_key "requests", "projects"
+  add_foreign_key "requests", "users"
 end

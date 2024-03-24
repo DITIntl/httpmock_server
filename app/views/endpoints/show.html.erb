@@ -1,0 +1,90 @@
+<div class="container-xl" style="min-height: calc(100vh - 200px);">
+  <%= render(Primer::Beta::Subhead.new(class: 'mt-12', spacious: true)) do |component| %>
+    <% component.with_heading(size: :large, tag: :h1) do %>
+      <%= render(Primer::Beta::Label.new(size: :large, scheme: request_method_scheme(@endpoint.request_method), inline: true)) { @endpoint.request_method } %>
+      <%= @endpoint.url %>
+      <%= render(Primer::Beta::ClipboardCopyButton.new(id: "clipboard-button", tooltip: :label, size: :'small',  aria: { label: "Copy" }, ml:3, value: request.url)) do | button|  %>
+        <% button.with_tooltip(text: "Copy to clipboard") %>
+      <% end %>
+    <% end %>
+    <% component.with_description do %>
+      <%= @endpoint.description %>
+    <% end %>
+    <% component.with_actions do %>
+      <%= render(Primer::Beta::Button.new(scheme: :secondary, classes: 'mr-2', tag: :a, href: show_project_path(@project.id))) do |button| %>
+        <% button.with_leading_visual_icon(icon: :'arrow-left') %>
+        Back to dashboard
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @requests.count.zero? %>
+    <%= render(Primer::Beta::Spinner.new(size: :large)) %>
+    <div class="pb-6 mt-n4">
+      <%= render(Primer::Beta::Heading.new(tag: :h3, mt: 6)) { t('views.endpoints.no_requests') } %>
+      <p class="fgColor-muted">Send requests to your new mock endpoint by using the sample code below.</p>
+      <%= render(Primer::Alpha::TabPanels.new(label: "label")) do |component| %>
+        <% component.with_tab(selected: true, id: "tab-curl") do |tab| %>
+          <% tab.with_panel do |_| %>
+            <code class="shj-lang-bash width-full">
+curl --header "Content-Type: application/json" --request <%= @endpoint.request_method == 'ANY' ? 'POST': @endpoint.request_method  %><% if @endpoint.request_method != 'GET' %> --data '{"success":true}'<% end %> '<%= @endpoint.url %>'
+            </code>
+          <% end %>
+          <% tab.with_text { "cURL"} %>
+        <% end %>
+        <% component.with_tab(selected: false, id: "tab-javascript") do |tab| %>
+          <% tab.with_panel do |_| %>
+            <code class="shj-lang-js width-full p-1">await fetch('https://httpbin.org/post', {
+    method: '<%= @endpoint.request_method == 'ANY' ? 'POST': @endpoint.request_method  %>',
+    <% if @endpoint.request_method != 'GET' %>
+    body: JSON.stringify({
+        success: true
+    }),
+    <% end %>
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+});</code>
+          <% end %>
+          <% tab.with_text { "JavaScript"} %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+
+  <% if @requests.count.positive? %>
+    <%= render(Primer::Beta::Heading.new(tag: :h3, mt: 6, mb: 2)) do %>
+      <%= render(Primer::Beta::Octicon.new(:mirror, size: :small)) %>
+      Requests
+    <% end %>
+
+    <%= render(Primer::Beta::BorderBox.new(padding: :default)) do |box| %>
+      <% @requests.each do |request| %>
+        <% box.with_row(scheme: :default) do %>
+          <div class="d-flex">
+            <%= render(Primer::Beta::Label.new(size: :large, scheme: request_method_scheme(request.method), inline: true)) { request.method } %>
+            <%= render(Primer::Beta::Heading.new(tag: :h4, classes: "wb-break-all", ml: 2)) { request.url } %>
+            <%= render(Primer::Beta::ClipboardCopyButton.new(id: "clipboard-button", tooltip: :label, size: :'small',  aria: { label: "Copy" }, ml:3, value: request.url)) do | button|  %>
+              <% button.with_tooltip(text: "Copy to clipboard") %>
+            <% end %>
+          </div>
+          <p class="fgColor-muted mt-1"><%= endpoint.description %></p>
+          <div class="d-flex flex-items-center">
+            <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none, ml:2, anchor_side: :outside_bottom)) do |menu| %>
+              <% menu.with_show_button(icon: :gear, size: :small, "aria-label": "Request settings") %>
+              <% menu.with_item(scheme: :danger, href: delete_endpoint_path(@project.id, @endpoint.id), form_arguments: { method: :delete})  do %>
+                <%= render(Primer::Beta::Octicon.new(:trash)) %>
+                <span class="ml-2">Delete request</span>
+              <% end %>
+            <%end %>
+            <span class="ml-2">
+              Created <%= render(Primer::Beta::RelativeTime.new(datetime: request.updated_at)) %>
+            </span>
+          </div>
+        <% end %>
+      <% end %>
+    <% end  %>
+  <% end %>
+</div>

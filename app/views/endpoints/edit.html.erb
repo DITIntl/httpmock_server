@@ -2,9 +2,9 @@
   <div style="min-width: 600px" class="mt-4">
     <%= render 'shared/back_button', {href: show_project_path(@project.id), text: t('views.shared.back_to_dashboard')} %>
     <div class="border rounded p-6 mt-4">
-      <%= render(Primer::Beta::Heading.new(tag: :h1, mb: 2, mt: -4)) { t('views.endpoints.new_title') } %>
-      <%= primer_form_with(url: create_endpoint_path(@project.id), model: @endpoint) do |f| %>
-        <%= render(CreateEndpointForm.new(f)) %>
+      <%= render(Primer::Beta::Heading.new(tag: :h1, mb: 2, mt: -4)) { t('views.endpoints.edit_title') } %>
+      <%= primer_form_with(url: update_endpoint_path(@project.id, @endpoint.id), model: @endpoint) do |f| %>
+        <%= render(EditEndpointForm.new(f)) %>
       <% end %>
     </div>
   </div>

@@ -11,16 +11,14 @@ class Project < ApplicationRecord
   validates :name, presence: true, length: { minimum: 5, maximum: 50 }
   validates :description, length: { maximum: 500 }, allow_blank: true
 
-  before_create :generate_subdomain
+  def subdomain
+    id
+  end
 
   private
 
   def strip_whitespace
     self.name = name.strip
     self.description = description.strip
-  end
-
-  def generate_subdomain
-    self.subdomain = SecureRandom.hex(16)
   end
 end

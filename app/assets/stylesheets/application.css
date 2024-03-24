@@ -31,13 +31,6 @@ a.text-decoration-none:hover {
   text-decoration: none;
 }
 
-.position-absolute.tooltip-s {
- padding: 16px !important;
-}
-.position-absolute.tooltip-s::backdrop{
-    padding-left: 16px !important;
-}
-
 .d-flex-center{
     display: flex;
     justify-content: center;

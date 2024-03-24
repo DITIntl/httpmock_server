@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This renders a form for the user to create a new project
-class CreateEndpointForm < ApplicationForm
+class EditEndpointForm < ApplicationForm
   # rubocop:disable Metrics/BlockLength
   form do |fields|
     fields.select_list(
@@ -58,7 +58,7 @@ class CreateEndpointForm < ApplicationForm
       label: I18n.t('forms.endpoint.description')
     )
     fields.submit(
-      label: I18n.t('forms.endpoint.create'),
+      label: I18n.t('forms.endpoint.update'),
       scheme: :primary,
       name: 'submit',
       class: 'mt-2'

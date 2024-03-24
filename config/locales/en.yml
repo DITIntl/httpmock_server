@@ -32,7 +32,7 @@ en:
     endpoint:
       invalid_request_method: "%{value} is not a valid HTTP method"
       invalid_response_headers: "is not a valid JSON array with schema [{\"key\": \"value\"}]"
-      request_path_already_exists: "already exists for this project"
+      request_path_already_exists: "is a duplicate for another existing endpoint (%{route})"
       invalid_request_path: "The request path is invalid. It must be a valid URI like /post/1"
 
   controllers:
@@ -72,6 +72,7 @@ en:
       deleted: "Your endpoint was deleted successfully."
       updated: "Your endpoint was updated successfully."
       update_error: "There was an error updating your endpoint."
+      delete_error: "There was an error deleting your endpoint."
       create_error: "There was an error creating your endpoint."
 
   mailers:
@@ -96,6 +97,7 @@ en:
     endpoints:
       new_title: "Create Endpoint"
       edit_title: "Edit Endpoint"
+      no_requests: "You haven't sent any requests to this endpoint."
       delete_title: "Delete Endpoint"
     shared:
       back_to_dashboard: "Back to dashboard"
@@ -136,3 +138,4 @@ en:
       description_placeholder: "e.g This is a mock of the GitHub API"
       description_caption: "Use the description field to add more context to your endpoint."
       create: "Create Endpoint"
+      update: "Update Endpoint"

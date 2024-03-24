@@ -5,6 +5,8 @@ class Endpoint < ApplicationRecord
   belongs_to :user
   belongs_to :project
 
+  has_many :requests, dependent: :destroy
+
   before_validation :strip_whitespace
 
   before_save :update_lookup_hash
@@ -14,11 +16,15 @@ class Endpoint < ApplicationRecord
   validate :validate_request_path
   validates :request_path, presence: true, length: { minimum: 1, maximum: 255 }
   validates :request_method,
-            inclusion: { in: %w[GET POST PUT PATCH DELETE *],
+            inclusion: { in: %w[GET POST PUT PATCH DELETE ANY],
                          message: I18n.t('models.endpoint.invalid_request_method') }
   validates :response_status_code, numericality: { only_integer: true, greater_than_or_equal_to: 100, less_than: 600 }
   validates :delay_in_milliseconds,
             numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than: 10_000 }, allow_blank: true
+
+  def url
+    "https://#{project.subdomain}.httpmock.dev#{request_path}"
+  end
 
   private
 
@@ -37,13 +43,26 @@ class Endpoint < ApplicationRecord
   end
 
   def route_is_unique
-    return unless Endpoint.where(lookup_hash: build_lookup_hash).where.not(id:).exists?
+    endpoint = Endpoint.where(lookup_hash: build_lookup_hash).where.not(id:).first
+    return if endpoint.blank?
 
-    errors.add(:request_path, I18n.t('models.endpoint.request_path_already_exists'))
+    route = "#{endpoint.request_method} #{endpoint.request_path}"
+    errors.add(
+      :request_path,
+      I18n.t('models.endpoint.request_path_already_exists', route:)
+    )
   end
 
   def build_lookup_hash
-    %W[{#{project.subdomain}}{#{request_method}}{#{request_path}} {#{project.subdomain}}{*}{#{request_path}}]
+    if request_method != 'ANY'
+      return %W[{#{project.subdomain}}{#{request_method}}{#{request_path}} {#{project.subdomain}}{ANY}{#{request_path}}]
+    end
+
+    hashes = []
+    %w[GET POST PUT PATCH DELETE].each do |method|
+      hashes.push("{#{project.subdomain}}{#{method}}{#{request_path}}")
+    end
+    hashes
   end
 
   def update_lookup_hash

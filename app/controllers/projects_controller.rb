@@ -8,12 +8,12 @@ class ProjectsController < ApplicationController
     @projects = current_user.projects
     return unless @projects.count.zero?
 
-    redirect_to new_projects_path, notice: I18n.t('controllers.projects.no_project')
+    redirect_to new_project_path, notice: I18n.t('controllers.projects.no_project')
   end
 
   def show
     @project = current_user.projects.find(params[:id])
-    @endpoints = @project.endpoints
+    @endpoints = @project.endpoints.sort_by(&:updated_at).reverse
   end
 
   def new
@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
     render :new, status: :unprocessable_entity
   end
 
-  def patch
+  def update
     @project = current_user.projects.find(params[:id])
 
     if @project.update(project_params)
