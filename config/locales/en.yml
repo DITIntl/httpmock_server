@@ -97,6 +97,8 @@ en:
       new_title: "Create Endpoint"
       edit_title: "Edit Endpoint"
       delete_title: "Delete Endpoint"
+    shared:
+      back_to_dashboard: "Back to dashboard"
 
   forms:
     auth:

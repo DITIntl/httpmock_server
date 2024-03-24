@@ -1,0 +1,6 @@
+<div>
+  <%= render(Primer::Beta::Button.new( scheme: :secondary, tag: :a, href: href )) do |_c| %>
+    <%= render(Primer::Beta::Octicon.new(:"arrow-left", size: :small)) %>
+    <%= text.blank? ? 'Back' : text %>
+  <% end %>
+</div>
