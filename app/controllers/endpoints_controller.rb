@@ -57,7 +57,6 @@ class EndpointsController < ApplicationController
   end
   # rubocop:enable all
 
-
   private
 
   def endpoint_params
