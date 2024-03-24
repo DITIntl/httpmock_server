@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_17_163323) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_23_090534) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -24,6 +24,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_17_163323) do
     t.datetime "updated_at", null: false
     t.index ["remember_token"], name: "index_active_sessions_on_remember_token", unique: true
     t.index ["user_id"], name: "index_active_sessions_on_user_id"
+  end
+
+  create_table "endpoints", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.string "request_path", null: false
+    t.string "request_method", null: false
+    t.integer "response_status_code", null: false
+    t.text "response_body"
+    t.text "response_headers"
+    t.integer "delay_in_milliseconds"
+    t.string "lookup_hash", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lookup_hash"], name: "index_endpoints_on_lookup_hash", unique: true
+    t.index ["project_id"], name: "index_endpoints_on_project_id"
+    t.index ["user_id"], name: "index_endpoints_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -52,5 +70,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_17_163323) do
   end
 
   add_foreign_key "active_sessions", "users", on_delete: :cascade
+  add_foreign_key "endpoints", "projects"
+  add_foreign_key "endpoints", "users"
   add_foreign_key "projects", "users", on_delete: :cascade
 end

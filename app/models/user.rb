@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   has_many :active_sessions, dependent: :destroy
   has_many :projects, dependent: :destroy
+  has_many :endpoints, dependent: :destroy
 
   attr_accessor :current_password
 

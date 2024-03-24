@@ -7,17 +7,17 @@
       <%= @project.description %>
     <% end %>
     <% component.with_actions do %>
-      <%= render(Primer::Beta::Button.new(scheme: :primary, classes: 'mr-2', tag: :a, href: create_projects_path)) do |button| %>
+      <%= render(Primer::Beta::Button.new(scheme: :primary, classes: 'mr-2', tag: :a, href: new_endpoint_path(@project.id))) do |button| %>
         <% button.with_leading_visual_icon(icon: :plus) %>
         Add Endpoint
       <% end %>
       <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none, anchor_side: :outside_bottom)) do |menu| %>
-        <% menu.with_show_button(icon: :gear, "aria-label": "Settings") %>
-        <% menu.with_item(tag: :a, content_arguments: { href: edit_projects_path(@project.id) }) do %>
+        <% menu.with_show_button(icon: :gear, "aria-label": "Project settings") %>
+        <% menu.with_item(tag: :a, content_arguments: { href: edit_project_path(@project.id) }) do %>
           <%= render(Primer::Beta::Octicon.new(:pencil)) %>
           <span class="ml-2">Edit project</span>
         <% end %>
-        <% menu.with_item(scheme: :danger, href: delete_projects_path(@project.id), form_arguments: { method: :delete})  do %>
+        <% menu.with_item(scheme: :danger, href: delete_project_path(@project.id), form_arguments: { method: :delete})  do %>
           <%= render(Primer::Beta::Octicon.new(:trash)) %>
           <span class="ml-2">Delete project</span>
         <% end %>
@@ -25,10 +25,65 @@
     <% end %>
   <% end %>
 
+  <% if @endpoints.count.zero? %>
+    <div class="text-center mt-12 pb-6">
+      <img alt="Placeholder for adding something" src="<%= image_url("add.svg") %>" width="50%" />
+      <%= render(Primer::Beta::Heading.new(tag: :h3, mt: 6, mb: 4)) { t('views.projects.no_endpoints') } %>
+      <%= render(Primer::Beta::Button.new(scheme: :primary, classes: 'mr-2', tag: :a, href: new_endpoint_path(@project.id))) do |button| %>
+        <% button.with_leading_visual_icon(icon: :plus) %>
+        Add Endpoint
+      <% end %>
+    </div>
+  <% end %>
 
-  <%=
-    render(Primer::Beta::BorderBox.new(padding: :default)) do |box|
-      box.with_row(scheme: :default) { "First Link" }
-    end
-  %>
+
+  <% if @endpoints.count.positive? %>
+    <%= render(Primer::Beta::Heading.new(tag: :h3, mt: 6, mb: 2)) do %>
+      <%= render(Primer::Beta::Octicon.new(:link, size: :small)) %>
+      Endpoints
+    <% end %>
+
+    <%= render(Primer::Beta::BorderBox.new(padding: :default)) do |box| %>
+      <% @endpoints.each do |endpoint| %>
+        <% box.with_row(scheme: :default) do %>
+          <div class="d-flex">
+            <%= render(Primer::Beta::Label.new(size: :large, scheme: :info, inline: true)) { endpoint.request_method } %>
+            <%= render(Primer::Beta::Heading.new(tag: :h4, ml: 2)) { "https://#{@project.subdomain}.httpmock.dev#{endpoint.request_path}"  } %>
+            <%= render(Primer::Beta::ClipboardCopyButton.new(id: "clipboard-button", tooltip: :label, size: :'small',  aria: { label: "Copy" }, ml:3, value: "https://#{@project.subdomain}.httpmock.dev#{endpoint.request_path}")) do | button|  %>
+              <% button.with_tooltip(text: "Copy to clipboard") %>
+            <% end %>
+          </div>
+          <p class="fgColor-muted mt-1"><%= endpoint.description %></p>
+          <div class="d-flex">
+            <%= render(Primer::Beta::Button.new(
+              scheme: :primary,
+              size: :small,
+              tag: :a,
+              )) do |_c| %>
+              <%= render(Primer::Beta::Counter.new(count: 12, round: false, limit: nil, scheme: :primary)) %>
+              Requests
+            <% end %>
+            <%= render(Primer::Beta::Button.new(
+              scheme: :secondary,
+              size: :small,
+              ml: 2,
+              tag: :a,
+              )) do |button| %>
+              <% button.with_leading_visual_icon(icon: :pencil) %>
+              Edit
+            <% end %>
+            <%= render(Primer::Beta::Button.new(
+              scheme: :danger,
+              size: :small,
+              ml: 2,
+              tag: :a,
+              )) do |button| %>
+              <% button.with_leading_visual_icon(icon: :trash) %>
+              Delete
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    <% end  %>
+  <% end %>
 </div>

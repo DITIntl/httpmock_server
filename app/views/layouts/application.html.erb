@@ -37,14 +37,14 @@
                 <% end %>
               <% end %>
               <% current_user.projects.all.each do |project|  %>
-                <% menu.with_item(label: project.name, tag: :a, content_arguments: { href: show_projects_path(project.id) }) do |item| %>
+                <% menu.with_item(label: project.name, tag: :a, content_arguments: { href: show_project_path(project.id) }) do |item| %>
                   <% if project.id == @project.id %>
                     <% item.with_trailing_visual_label(scheme: :accent, inline: true).with_content("active") %>
                   <% end %>
                 <% end %>
               <% end %>
               <% menu.with_divider %>
-              <% menu.with_item(tag: :a, content_arguments: { href: new_projects_path }) do %>
+              <% menu.with_item(tag: :a, content_arguments: { href: new_project_path }) do %>
                 <%= render(Primer::Beta::Octicon.new(:"plus", size: :small)) %>
                 <span class="text-bold">Create Project</span>
               <% end %>
@@ -79,11 +79,10 @@
 
     <% if flash.count > 0 %>
       <div class="<%= flash.first[0] == 'alert'? 'color-bg-danger': 'color-bg-accent' %>">
-        <div class="container-xl color-bg-accent">
+        <div class="container-xl">
           <%= render(Primer::Alpha::Banner.new(full: true, scheme: flash.first[0] == 'alert'? :danger : :default, dismiss_scheme: :remove, icon:  nil))  do %>
-            <% flash.first.then do |name, msg| %>
+            <% flash.first.then do |_, msg| %>
               <%= msg %>
-              <%= name %>
             <% end %>
           <% end %>
         </div>

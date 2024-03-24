@@ -5,6 +5,6 @@ class RootController < ApplicationController
   def index
     return unless user_signed_in?
 
-    redirect_to index_projects_path
+    redirect_to index_project_path
   end
 end

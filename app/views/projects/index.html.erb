@@ -7,14 +7,14 @@
   <div class="gutter">
     <% @projects.all.each do |project|  %>
       <div class="col-3">
-        <div class="border rounded px-4 py-2">
+        <%= render(Primer::Box.new(border: true, p:3, border_radius: 1, classes: 'color-shadow-small')) do %>
           <%= render(Primer::Beta::Heading.new(tag: :h2)) { project.name } %>
           <p class="fgColor-muted"><%= project.description %></p>
-          <%= render(Primer::Beta::Button.new(scheme: :primary, tag: :a, classes: ['mb-2'], href: show_projects_path(project.id))) do |button| %>
-            <% button.with_leading_visual_icon(icon: :link) %>
+          <%= render(Primer::Beta::Button.new(scheme: :primary, tag: :a, classes: ['mb-2'], href: show_project_path(project.id))) do |button| %>
+            <% button.with_leading_visual_icon(icon: :'project-roadmap') %>
             Open Project
           <% end %>
-        </div>
+        <% end %>
       </div>
     <% end %>
   </div>

@@ -13,6 +13,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = current_user.projects.find(params[:id])
+    @endpoints = @project.endpoints
   end
 
   def new
@@ -26,12 +27,12 @@ class ProjectsController < ApplicationController
   def delete
     @project = current_user.projects.find(params[:id])
     @project.destroy
-    redirect_to index_projects_path, notice: I18n.t('controllers.projects.deleted')
+    redirect_to index_project_path, notice: I18n.t('controllers.projects.deleted')
   end
 
   def create
     @project = current_user.projects.create(project_params)
-    return redirect_to new_projects_path, notice: I18n.t('controllers.projects.created') if @project.save
+    return redirect_to new_project_path, notice: I18n.t('controllers.projects.created') if @project.save
 
     flash.now[:alert] = I18n.t('controllers.projects.create_error')
     render :new, status: :unprocessable_entity
@@ -41,7 +42,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.find(params[:id])
 
     if @project.update(project_params)
-      return redirect_to show_projects_path(@project.id), notice: I18n.t('controllers.projects.updated')
+      return redirect_to show_project_path(@project.id), notice: I18n.t('controllers.projects.updated')
     end
 
     flash.now[:alert] = I18n.t('controllers.projects.update_error')

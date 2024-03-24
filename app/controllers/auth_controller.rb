@@ -28,7 +28,7 @@ class AuthController < ApplicationController
     end
 
     if @user.authenticate(params[:user][:password])
-      after_login_path = session[:user_return_to] || projects_path
+      after_login_path = session[:user_return_to] || index_project_path
       active_session = login_user @user
       remember(active_session) if params[:user][:remember_me] == '1'
       return redirect_to after_login_path, notice: I18n.t('controllers.auth.signed_in')

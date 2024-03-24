@@ -28,6 +28,13 @@
 #       enabled: "ON"
 
 en:
+  models:
+    endpoint:
+      invalid_request_method: "%{value} is not a valid HTTP method"
+      invalid_response_headers: "is not a valid JSON array with schema [{\"key\": \"value\"}]"
+      request_path_already_exists: "already exists for this project"
+      invalid_request_path: "The request path is invalid. It must be a valid URI like /post/1"
+
   controllers:
     active_sessions:
       deleted: "Session was deleted successfully."
@@ -60,6 +67,12 @@ en:
       updated: "Your project was updated successfully."
       update_error: "There was an error updating your project."
       create_error: "There was an error creating your project."
+    endpoints:
+      created: "Your endpoint was created successfully."
+      deleted: "Your endpoint was deleted successfully."
+      updated: "Your endpoint was updated successfully."
+      update_error: "There was an error updating your endpoint."
+      create_error: "There was an error creating your endpoint."
 
   mailers:
     user:
@@ -76,8 +89,14 @@ en:
       confirm_title: "Confirm Your Email"
     projects:
       new_title: "Create Project"
+      explanation: "Your mocked endpoints are grouped into projects for better organization."
+      no_endpoints: "You haven't yet created mock endpoints."
       edit_title: "Edit Project"
       delete_title: "Delete Project"
+    endpoints:
+      new_title: "Create Endpoint"
+      edit_title: "Edit Endpoint"
+      delete_title: "Delete Endpoint"
 
   forms:
     auth:
@@ -96,3 +115,22 @@ en:
       create: "Create Project"
       update: "Update Project"
       delete: "Delete Project"
+    endpoint:
+      request_path: "Request Path"
+      request_method: "Request Method"
+      request_method_caption: "Use ANY if you want to match all HTTP methods (GET, POST, DELETE etc)"
+      request_path_caption: "Your full URL will look like https://{subdomain}.httmock.dev/{path}"
+      response_status_code: "Response Status Code"
+      response_status_code_caption: "HTTP status code to return in the response"
+      response_body: "Response Body"
+      response_body_placeholder: "e.g { \"message\": \"Hello, World!\" }"
+      response_body_caption: "The response body can be any valid JSON, XML, or plain text"
+      response_headers: "Response Headers"
+      response_headers_placeholder: "e.g [{\"Content-Type\":\"application/json\"}, {\"x-request-id\":\"abc-1223\"}]"
+      response_headers_caption: "This should be a JSON array of headers that will be returned with the HTTP response"
+      delay_in_milliseconds: "Delay in Milliseconds"
+      delay_in_milliseconds_caption: "The time in milliseconds to wait before sending the HTTP response"
+      description: "Description"
+      description_placeholder: "e.g This is a mock of the GitHub API"
+      description_caption: "Use the description field to add more context to your endpoint."
+      create: "Create Endpoint"
