@@ -6,7 +6,15 @@ image: ndolestudio/httpmock
 
 # Deploy to these servers.
 servers:
-  - 172.178.76.39
+  web:
+    hosts:
+      - 172.178.76.39
+    labels:
+      traefik.http.routers.httpmock.rule: Host(`azure.httpmock.dev`)
+      traefik.http.routers.httpmock_secure.entrypoints: websecure
+      traefik.http.routers.httpmock_secure.rule: Host(`azure.httpmock.dev`)
+      traefik.http.routers.httpmock_secure.tls: true
+      traefik.http.routers.httpmock_secure.tls.certresolver: letsencrypt
 
 # Credentials for your image host.
 registry:
@@ -21,8 +29,8 @@ registry:
 # Inject ENV variables into containers (secrets come from .env).
 # Remember to run `kamal env push` after making changes!
 env:
-#   clear:
-#     DB_HOST: 192.168.0.2
+   clear:
+     HOSTNAME: azure.httpmock.dev
    secret:
      - RAILS_MASTER_KEY
      - UPTRACE_DSN
