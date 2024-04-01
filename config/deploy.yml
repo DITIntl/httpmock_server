@@ -53,7 +53,7 @@ traefik:
       - "/letsencrypt/acme.json:/letsencrypt/acme.json"
   args:
     accesslog: true
-    sendAnonymousUsage: true
+    global.sendAnonymousUsage: true
     entryPoints.web.address: ":80"
     entryPoints.websecure.address: ":443"
     entryPoints.web.http.redirections.entryPoint.to: websecure
