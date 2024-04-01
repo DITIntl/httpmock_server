@@ -10,9 +10,9 @@ servers:
     hosts:
       - 172.178.76.39
     labels:
-      traefik.http.routers.httpmock.rule: Host(`azure.httpmock.dev`)
+      traefik.http.routers.httpmock.rule: Host(`*.httpmock.dev`) || Host(`httpmock.dev`)
       traefik.http.routers.httpmock_secure.entrypoints: websecure
-      traefik.http.routers.httpmock_secure.rule: Host(`azure.httpmock.dev`)
+      traefik.http.routers.httpmock_secure.rule: Host(`*.httpmock.dev`) || Host(`httpmock.dev`)
       traefik.http.routers.httpmock_secure.tls: true
       traefik.http.routers.httpmock_secure.tls.certresolver: letsencrypt
 
@@ -30,7 +30,7 @@ registry:
 # Remember to run `kamal env push` after making changes!
 env:
    clear:
-     HOSTNAME: azure.httpmock.dev
+     HOSTNAME: httpmock.dev
    secret:
      - RAILS_MASTER_KEY
      - UPTRACE_DSN
