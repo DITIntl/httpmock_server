@@ -10,9 +10,9 @@ servers:
     hosts:
       - 172.178.76.39
     labels:
-      traefik.http.routers.httpmock.rule: Host(`*.httpmock.dev`) || Host(`httpmock.dev`)
+      traefik.http.routers.httpmock.rule: Host(`httpmock.dev`)
       traefik.http.routers.httpmock_secure.entrypoints: websecure
-      traefik.http.routers.httpmock_secure.rule: Host(`*.httpmock.dev`) || Host(`httpmock.dev`)
+      traefik.http.routers.httpmock_secure.rule: Host(`httpmock.dev`)
       traefik.http.routers.httpmock_secure.tls: true
       traefik.http.routers.httpmock_secure.tls.certresolver: letsencrypt
 
