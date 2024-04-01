@@ -53,11 +53,13 @@ traefik:
       - "/letsencrypt/acme.json:/letsencrypt/acme.json"
   args:
     accesslog: true
+    sendAnonymousUsage: true
     entryPoints.web.address: ":80"
     entryPoints.websecure.address: ":443"
     entryPoints.web.http.redirections.entryPoint.to: websecure
     entryPoints.web.http.redirections.entryPoint.scheme: https
     entryPoints.web.http.redirections.entrypoint.permanent: true
+    entrypoints.websecure.http.tls: true
     entrypoints.websecure.http.tls.domains[0].main: "httpmock.dev"
     entrypoints.websecure.http.tls.domains[0].sans: "*.httpmock.dev"
     certificatesResolvers.letsencrypt.acme.email: "arnold@httpmock.dev"
