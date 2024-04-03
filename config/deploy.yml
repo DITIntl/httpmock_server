@@ -10,9 +10,11 @@ servers:
     hosts:
       - 172.178.76.39
     labels:
-      traefik.http.routers.httpmock.rule: Host(`httpmock.dev`) || Host(`*.httpmock.dev`)
+      traefik.http.routers.httpmock.rule: Host(`*.httpmock.dev`) || Host(`httpmock.dev`)
       traefik.http.routers.httpmock_secure.entrypoints: websecure
       traefik.http.routers.httpmock_secure.tls.certresolver: letsencrypt
+      traefik.http.routers.httpmock.tls.domains[0].main: "httpmock.dev"
+      traefik.http.routers.httpmock.tls.domains[0].sans: "*.httpmock.dev"
 
 # Credentials for your image host.
 registry:
@@ -51,6 +53,8 @@ traefik:
       - "443:443"
     volume:
       - "/letsencrypt/acme.json:/letsencrypt/acme.json"
+  labels:
+    traefik.http.routers.catchall.entryPoints: web
   args:
     accesslog: true
     global.sendAnonymousUsage: true
@@ -64,7 +68,8 @@ traefik:
     entrypoints.websecure.http.tls.domains[0].sans: "*.httpmock.dev"
     certificatesResolvers.letsencrypt.acme.email: "arnold@httpmock.dev"
     certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
-    certificatesresolvers.letsencrypt.acme.dnschallenge.provider: cloudflare
+    certificatesResolvers.letsencrypt.acme.dnschallenge: true
+    certificatesResolvers.letsencrypt.acme.dnschallenge.provider: cloudflare
   env:
     secret:
       - CLOUDFLARE_API_KEY
@@ -100,3 +105,8 @@ healthcheck:
 # useful for more complex deploy configurations.
 #
 # allow_empty_roles: false
+
+builder:
+  multiarch: false
+  local:
+    arch: amd64
