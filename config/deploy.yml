@@ -10,11 +10,9 @@ servers:
     hosts:
       - 172.178.76.39
     labels:
-      traefik.http.routers.httpmock.rule: HostRegexp(`{subdomain:[a-zA-Z0-9-]+}.httpmock.dev`)  || Host(`httpmock.dev`)
+      traefik.http.routers.httpmock.rule: HostRegexp(`*.httpmock.dev`)  || Host(`httpmock.dev`)
       traefik.http.routers.httpmock_secure.entrypoints: websecure
       traefik.http.routers.httpmock_secure.tls.certresolver: letsencrypt
-      traefik.http.routers.httpmock.tls.domains[0].main: "httpmock.dev"
-      traefik.http.routers.httpmock.tls.domains[0].sans: "*.httpmock.dev"
 
 # Credentials for your image host.
 registry:
