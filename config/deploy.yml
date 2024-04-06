@@ -16,6 +16,9 @@ servers:
       traefik.http.routers.httpmock_secure.tls.domains[0].main: "httpmock.dev"
       traefik.http.routers.httpmock_secure.tls.domains[0].sans: "*.httpmock.dev"
 
+volumes:
+  - "/app/vault:/app/vault/"
+
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
@@ -41,6 +44,7 @@ env:
     - SMTP_PASSWORD
     - SMTP_USERNAME
     - SMTP_PORT
+    - GOOGLE_APPLICATION_CREDENTIALS
 
 # Use a different ssh user than root
 ssh:

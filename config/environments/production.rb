@@ -99,4 +99,5 @@ Rails.application.configure do
 
   # Stackdriver Shared parameters
   config.google_cloud.project_id = 'httpmock-dev'
+  config.google_cloud.logging.project_id = 'httpmock-dev'
 end
