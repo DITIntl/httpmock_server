@@ -74,6 +74,8 @@ en:
       update_error: "There was an error updating your endpoint."
       delete_error: "There was an error deleting your endpoint."
       create_error: "There was an error creating your endpoint."
+    requests:
+      not_found: "The requested route could not be matched. Visit https://httpmock.dev for more information."
 
   mailers:
     user:

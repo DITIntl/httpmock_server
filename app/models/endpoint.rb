@@ -26,6 +26,13 @@ class Endpoint < ApplicationRecord
     "https://#{project.subdomain}.httpmock.dev#{request_path}"
   end
 
+  def self.fetch_by_request(request)
+    query = %W[{#{request.subdomain}}{#{request.method}}{#{request.path}} {#{request.subdomain}}{ANY}{#{request.path}}]
+    Endpoint
+      .where(lookup_hash: query)
+      .first
+  end
+
   private
 
   def validate_response_headers
