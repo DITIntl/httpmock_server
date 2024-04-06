@@ -39,3 +39,7 @@
 .github
 .kamal
 .hooks
+
+
+# Ignore the Kamal config
+config/deploy.yml

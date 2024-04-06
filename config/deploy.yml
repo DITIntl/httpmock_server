@@ -10,11 +10,11 @@ servers:
     hosts:
       - 20.55.97.122
     labels:
-      traefik.http.routers.httpmock.rule: HostRegexp(`*.httpmock.dev`)  || Host(`httpmock.dev`)
+      traefik.http.routers.httpmock.rule: HostRegexp(`{subdomain:[a-zA-Z0-9-]+}.httpmock.dev`)  || Host(`httpmock.dev`)
       traefik.http.routers.httpmock_secure.entrypoints: websecure
       traefik.http.routers.httpmock_secure.tls.certresolver: letsencrypt
-      traefik.http.routers.httpmock.tls.domains[0].main: "httpmock.dev"
-      traefik.http.routers.httpmock.tls.domains[0].sans: "*.httpmock.dev"
+      traefik.http.routers.httpmock_secure.tls.domains[0].main: "httpmock.dev"
+      traefik.http.routers.httpmock_secure.tls.domains[0].sans: "*.httpmock.dev"
 
 # Credentials for your image host.
 registry:
@@ -63,9 +63,6 @@ traefik:
     entryPoints.web.http.redirections.entryPoint.to: websecure
     entryPoints.web.http.redirections.entryPoint.scheme: https
     entryPoints.web.http.redirections.entrypoint.permanent: true
-    entrypoints.websecure.http.tls: true
-    entrypoints.websecure.http.tls.domains[0].main: "httpmock.dev"
-    entrypoints.websecure.http.tls.domains[0].sans: "*.httpmock.dev"
     certificatesResolvers.letsencrypt.acme.email: "arnold@httpmock.dev"
     certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
     certificatesResolvers.letsencrypt.acme.dnschallenge: true
