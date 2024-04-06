@@ -11,8 +11,8 @@ servers:
       - 172.178.76.39
     labels:
       traefik.http.routers.httpmock.rule: Host(`*.httpmock.dev`)  || Host(`httpmock.dev`)
-      traefik.http.routers.httpmock_secure.entrypoints: websecure
-      traefik.http.routers.httpmock_secure.tls.certresolver: letsencrypt
+#      traefik.http.routers.httpmock_secure.entrypoints: websecure
+#      traefik.http.routers.httpmock_secure.tls.certresolver: letsencrypt
 
 # Credentials for your image host.
 registry:
@@ -46,32 +46,25 @@ ssh:
 
 # Configure custom arguments for Traefik
 traefik:
-  options:
-    publish:
-      - "443:443"
-    volume:
-      - "/letsencrypt/acme.json:/letsencrypt/acme.json"
-  labels:
-    traefik.http.routers.catchall.entryPoints: web
   args:
     accesslog: true
-    global.sendAnonymousUsage: true
-    entryPoints.web.address: ":80"
-    entryPoints.websecure.address: ":443"
-    entryPoints.web.http.redirections.entryPoint.to: websecure
-    entryPoints.web.http.redirections.entryPoint.scheme: https
-    entryPoints.web.http.redirections.entrypoint.permanent: true
-    entrypoints.websecure.http.tls: true
-    entrypoints.websecure.http.tls.domains[0].main: "httpmock.dev"
-    entrypoints.websecure.http.tls.domains[0].sans: "*.httpmock.dev"
-    certificatesResolvers.letsencrypt.acme.email: "arnold@httpmock.dev"
-    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
-    certificatesResolvers.letsencrypt.acme.dnschallenge: true
-    certificatesResolvers.letsencrypt.acme.dnschallenge.provider: cloudflare
-  env:
-    secret:
-      - CLOUDFLARE_API_KEY
-      - CLOUDFLARE_EMAIL
+#    global.sendAnonymousUsage: true
+#    entryPoints.web.address: ":80"
+#    entryPoints.websecure.address: ":443"
+#    entryPoints.web.http.redirections.entryPoint.to: websecure
+#    entryPoints.web.http.redirections.entryPoint.scheme: https
+#    entryPoints.web.http.redirections.entrypoint.permanent: true
+#    entrypoints.websecure.http.tls: true
+#    entrypoints.websecure.http.tls.domains[0].main: "httpmock.dev"
+#    entrypoints.websecure.http.tls.domains[0].sans: "*.httpmock.dev"
+#    certificatesResolvers.letsencrypt.acme.email: "arnold@httpmock.dev"
+#    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
+#    certificatesResolvers.letsencrypt.acme.dnschallenge: true
+#    certificatesResolvers.letsencrypt.acme.dnschallenge.provider: cloudflare
+#  env:
+#    secret:
+#      - CLOUDFLARE_API_KEY
+#      - CLOUDFLARE_EMAIL
 
 # Configure a custom healthcheck (default is /up on port 3000)
 healthcheck:
