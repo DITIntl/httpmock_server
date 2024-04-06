@@ -8,7 +8,7 @@ image: ndolestudio/httpmock
 servers:
   web:
     hosts:
-      - 172.178.76.39
+      - 20.55.97.122
     labels:
       traefik.http.routers.httpmock.rule: HostRegexp(`*.httpmock.dev`)  || Host(`httpmock.dev`)
       traefik.http.routers.httpmock_secure.entrypoints: websecure
@@ -44,7 +44,7 @@ env:
 
 # Use a different ssh user than root
 ssh:
-  user: arnold
+  user: azureuser
 
 # Configure custom arguments for Traefik
 traefik:
