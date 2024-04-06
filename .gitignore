@@ -38,3 +38,4 @@
 tmp
 /config/credentials/production.key
 coverage
+vendor/bundle/
