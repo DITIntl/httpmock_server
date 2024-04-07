@@ -3,9 +3,7 @@
     <% component.with_heading(size: :large, tag: :h1) do %>
       <%= render(Primer::Beta::Label.new(size: :large, scheme: request_method_scheme(@endpoint.request_method), inline: true)) { @endpoint.request_method } %>
       <%= @endpoint.url %>
-      <%= render(Primer::Beta::ClipboardCopyButton.new(id: "clipboard-button", tooltip: :label, size: :'small',  aria: { label: "Copy" }, ml:3, value: request.url)) do | button|  %>
-        <% button.with_tooltip(text: "Copy to clipboard") %>
-      <% end %>
+      <%= render(Primer::Beta::ClipboardCopyButton.new(id: "clipboard-button", tooltip: :label, size: :'small',  aria: { label: "Copy" }, ml:3, value: request.url)) %>
     <% end %>
     <% component.with_description do %>
       <%= @endpoint.description %>
@@ -55,10 +53,15 @@ curl --header "Content-Type: application/json" --request <%= @endpoint.request_m
 
 
   <% if @requests.count.positive? %>
-    <%= render(Primer::Beta::Heading.new(tag: :h3, mt: 6, mb: 2)) do %>
-      <%= render(Primer::Beta::Octicon.new(:mirror, size: :small)) %>
-      Requests
-    <% end %>
+    <div class="d-flex flex-items-baseline">
+      <%= render(Primer::Beta::Heading.new(tag: :h3, mt: 6, mb: 2)) do %>
+        <%= render(Primer::Beta::Octicon.new(:mirror, size: :medium)) %>
+        HTTP Requests
+      <% end %>
+      <div>
+        <%= render(Primer::Beta::Spinner.new(size: :small, ml: 2, mb: -1)) %>
+      </div>
+    </div>
 
     <%= render(Primer::Beta::BorderBox.new(padding: :default)) do |box| %>
       <% @requests.each do |request| %>
@@ -66,22 +69,99 @@ curl --header "Content-Type: application/json" --request <%= @endpoint.request_m
           <div class="d-flex">
             <%= render(Primer::Beta::Label.new(size: :large, scheme: request_method_scheme(request.method), inline: true)) { request.method } %>
             <%= render(Primer::Beta::Heading.new(tag: :h4, classes: "wb-break-all", ml: 2)) { request.url } %>
-            <%= render(Primer::Beta::ClipboardCopyButton.new(id: "clipboard-button", tooltip: :label, size: :'small',  aria: { label: "Copy" }, ml:3, value: request.url)) do | button|  %>
-              <% button.with_tooltip(text: "Copy to clipboard") %>
+            <%= render(Primer::Beta::ClipboardCopyButton.new(id: "request-url-#{request.id}", size: :small,  aria: { label: "Copy" }, ml:3, value: request.url)) do | button|  %>
+              <% button.with_tooltip(text: "Copy URL") %>
             <% end %>
           </div>
-          <p class="fgColor-muted mt-1"><%= endpoint.description %></p>
-          <div class="d-flex flex-items-center">
-            <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none, ml:2, anchor_side: :outside_bottom)) do |menu| %>
-              <% menu.with_show_button(icon: :gear, size: :small, "aria-label": "Request settings") %>
-              <% menu.with_item(scheme: :danger, href: delete_endpoint_path(@project.id, @endpoint.id), form_arguments: { method: :delete})  do %>
-                <%= render(Primer::Beta::Octicon.new(:trash)) %>
-                <span class="ml-2">Delete request</span>
+          <p class="fgColor-muted mt-1">
+            Received <%= render(Primer::Beta::RelativeTime.new(datetime: request.created_at)) %>
+          </p>
+          <div>
+            <%= render(Primer::Alpha::TabPanels.new(label: "HTTP Request Details", mt: 2)) do |component| %>
+              <% component.with_tab(selected: true, id: "tab-summary") do |tab| %>
+                <% tab.with_text { "Request Summary" } %>
+                <% tab.with_panel do %>
+                  <table>
+                    <tr>
+                      <td>
+                        <%= render(Primer::Beta::Heading.new(tag: :h5, classes: "wb-break-all")) do %>
+                        IP Address
+                        <% end %>
+                      </td>
+                      <td style="min-width: 500px">
+                        <%= render(Primer::Alpha::TextField.new(name: "ip_address", value: request.ip_address, label: "IP Address", visually_hide_label: true, readonly: true)) %>
+                      </td>
+                      <td>
+                        <%= render(Primer::Beta::ClipboardCopyButton.new(id: "request-ip-address-#{request.id}", size: :small,  aria: { label: "Copy" }, value: request.created_at)) do | button|  %>
+                          <% button.with_tooltip(text: "Copy IP Address") %>
+                        <% end %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <%= render(Primer::Beta::Heading.new(tag: :h5, classes: "wb-break-all")) do %>
+                          Received At
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= render(Primer::Alpha::TextField.new(name: "Received At", value: request.created_at, label: "created_at", visually_hide_label: true, readonly: true)) %>
+                      </td>
+                      <td></td>
+                    </tr>
+                  </table>
+                  <%= render(Primer::Alpha::ActionMenu.new(select_variant: :none, mt: 4, anchor_side: :outside_bottom)) do |menu| %>
+                    <% menu.with_show_button(icon: :gear, size: :small, "aria-label": "Request settings") %>
+                    <% menu.with_item(scheme: :danger, href: delete_request_path(@project.id, @endpoint.id, request.id), form_arguments: { method: :delete})  do %>
+                      <%= render(Primer::Beta::Octicon.new(:trash)) %>
+                      <span class="ml-2">Delete request</span>
+                    <% end %>
+                  <%end %>
+                <% end %>
               <% end %>
-            <%end %>
-            <span class="ml-2">
-              Created <%= render(Primer::Beta::RelativeTime.new(datetime: request.updated_at)) %>
-            </span>
+              <% component.with_tab(selected: false, id: "tab-headers") do |tab| %>
+                <% tab.with_text { "Request Headers" } %>
+                <% tab.with_panel do %>
+                  <table>
+                    <% JSON.parse(request.headers).each do |header| %>
+                      <tr>
+                        <td>
+                          <%= render(Primer::Beta::Heading.new(tag: :h5, classes: "wb-break-all")) do %>
+                            <%= header.keys[0] %>
+                          <% end %>
+                        </td>
+                        <td style="min-width: 500px">
+                          <%= render(Primer::Alpha::TextField.new(name: header.keys[0], value: header.values[0], label: header.keys[0], visually_hide_label: true, readonly: true)) %>
+                        </td>
+                        <td>
+                          <%= render(Primer::Beta::ClipboardCopyButton.new(id: "request-header-#{header.keys[0]}", size: :small,  aria: { label: "Copy" }, value: header.values[0])) do | button|  %>
+                            <% button.with_tooltip(text: "Copy Header") %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </table>
+                <% end %>
+              <% end %>
+              <% component.with_tab(selected: false, id: "tab-headers") do |tab| %>
+                <% tab.with_text { "Request Body" } %>
+                <% tab.with_panel do %>
+                  <table>
+                      <tr>
+                        <td style="min-width: 700px">
+                          <%= render(Primer::Alpha::TextArea.new(name: "request_body", value: request.body, rows: 20, label: 'request_body', visually_hide_label: true, readonly: true)) %>
+                        </td>
+                        <td style="vertical-align: baseline;">
+                          <% unless request.body.blank? %>
+                            <%=  render(Primer::Beta::ClipboardCopyButton.new(id: "request-body-#{request.id}",  size: :small,  aria: { label: "Copy" }, value: request.body)) do | button|   %>
+                              <%  button.with_tooltip(text: "Copy Body") %>
+                            <%  end %>
+                          <%  end %>
+                        </td>
+                      </tr>
+                  </table>
+                <% end %>
+              <% end %>
+            <% end  %>
           </div>
         <% end %>
       <% end %>

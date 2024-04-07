@@ -50,6 +50,9 @@ Rails.application.routes.draw do
     patch '/projects/:project_id/endpoints/:id/edit', action: :update, controller: :endpoints, as: 'update_endpoint'
     delete '/projects/:project_id/endpoints/:id', action: :delete, controller: :endpoints, as: 'delete_endpoint'
     post '/projects/:project_id/endpoints', action: :create, controller: :endpoints, as: 'create_endpoint'
+
+    delete '/projects/:project_id/endpoints/:endpoint_id/requests/:id', action: :delete, controller: :requests,
+                                                                        as: 'delete_request'
   end
 
   match '*all', via: :all, controller: :requests, action: :all

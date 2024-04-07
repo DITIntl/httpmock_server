@@ -75,6 +75,8 @@ en:
       delete_error: "There was an error deleting your endpoint."
       create_error: "There was an error creating your endpoint."
     requests:
+      deleted: "Your request was deleted successfully."
+      delete_error: "There was an error deleting your request."
       not_found: "The requested route could not be matched. Visit https://httpmock.dev for more information."
 
   mailers:

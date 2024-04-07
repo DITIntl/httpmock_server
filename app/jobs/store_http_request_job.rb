@@ -14,6 +14,7 @@ class StoreHttpRequestJob < ApplicationJob
       headers: request[:headers],
       body: request[:body],
       user_id: request[:user_id],
+      ip_address: request[:ip_address],
       endpoint_id: request[:endpoint_id],
       project_id: request[:project_id]
     )

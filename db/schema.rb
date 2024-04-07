@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_24_154028) do
     t.bigint "endpoint_id", null: false
     t.string "url", null: false
     t.string "method", null: false
+    t.string "ip_address", null: false
     t.text "body"
     t.text "headers"
     t.datetime "created_at", null: false
