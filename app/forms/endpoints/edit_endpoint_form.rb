@@ -34,6 +34,7 @@ class EditEndpointForm < ApplicationForm
     )
     fields.text_area(
       name: :response_body,
+      rows: 15,
       placeholder: I18n.t('forms.endpoint.response_body_placeholder'),
       caption: I18n.t('forms.endpoint.response_body_caption'),
       label: I18n.t('forms.endpoint.response_body')

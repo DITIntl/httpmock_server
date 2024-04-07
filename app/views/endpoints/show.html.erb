@@ -92,7 +92,7 @@ curl --header "Content-Type: application/json" --request <%= @endpoint.request_m
                         <%= render(Primer::Alpha::TextField.new(name: "ip_address", value: request.ip_address, label: "IP Address", visually_hide_label: true, readonly: true)) %>
                       </td>
                       <td>
-                        <%= render(Primer::Beta::ClipboardCopyButton.new(id: "request-ip-address-#{request.id}", size: :small,  aria: { label: "Copy" }, value: request.created_at)) do | button|  %>
+                        <%= render(Primer::Beta::ClipboardCopyButton.new(id: "request-ip-address-#{request.id}", size: :small,  aria: { label: "Copy" }, value: request.ip_address)) do | button|  %>
                           <% button.with_tooltip(text: "Copy IP Address") %>
                         <% end %>
                       </td>
