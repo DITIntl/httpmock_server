@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
     match '/status/:status_code', via: :all, controller: :status, action: :all, constraints: { status_code: /[0-9]{3}/ }
 
-    get '/auth/login', action: :login, controller: 'auth'
+    get '/auth/login', action: :login, controller: 'auth', as: 'auth_login'
     get '/auth/sign-up', action: :sign_up, controller: 'auth'
     post '/auth/login', action: :post_login, controller: 'auth'
     post '/auth/sign-up', action: :post_sign_up, controller: 'auth'

@@ -2,6 +2,8 @@
 
 # This controller is used to manage requests
 class RequestsController < ApplicationController
+  before_action :authenticate_user!, only: %i[delete]
+
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def all
