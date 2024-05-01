@@ -112,7 +112,7 @@ GEM
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)
       net-http
-    faraday-retry (2.2.0)
+    faraday-retry (2.2.1)
       faraday (~> 2.0)
     gapic-common (0.21.1)
       faraday (>= 1.9, < 3.a)
@@ -129,7 +129,7 @@ GEM
       google-cloud-errors (~> 1.0)
     google-cloud-env (2.1.1)
       faraday (>= 1.0, < 3.a)
-    google-cloud-error_reporting (0.42.3)
+    google-cloud-error_reporting (0.43.0)
       concurrent-ruby (~> 1.1)
       google-cloud-core (~> 1.5)
       google-cloud-error_reporting-v1beta1 (~> 0.0)
@@ -301,7 +301,7 @@ GEM
       view_component (>= 3.1, < 4.0)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.4)
+    public_suffix (5.0.5)
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
